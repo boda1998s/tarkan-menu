@@ -31,12 +31,12 @@ header.hero{position:relative;overflow:hidden;padding-block:28px 22px}
 .tag{font-family:var(--f-latin);letter-spacing:.06em;font-size:clamp(13px,2.6vw,17px);opacity:.95;display:flex;align-items:center;gap:10px}
 .tag::before,.tag::after{content:"";height:2px;width:26px;background:var(--white);opacity:.7}
 .hero p.loc{margin:0;font-weight:700;font-size:15px;opacity:.92}
-.hero-img{width:clamp(140px,32vw,300px);filter:drop-shadow(0 18px 24px var(--shade));transform:rotate(-6deg)}
+.hero-img{width:clamp(140px,32vw,300px);transform:rotate(-6deg)}
 .stripe{position:absolute;inset-block:0;inset-inline-end:clamp(150px,36vw,340px);width:14px;background:var(--white);opacity:.95}
 @media (max-width:520px){.stripe{display:none}}
 
 /* nav */
-nav.cats{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--red);border-block:2px solid var(--white)}
+nav.cats{position:sticky;will-change:transform;top:env(safe-area-inset-top,0px);z-index:5;background:var(--red);border-block:2px solid var(--white)}
 .cats .wrap{display:flex;gap:8px;overflow-x:auto;padding-block:10px;scrollbar-width:none}
 .cats .wrap::-webkit-scrollbar{display:none}
 .cats a{flex:none;color:var(--white);text-decoration:none;font-family:var(--f-display);font-size:18px;line-height:1;padding:9px 14px 7px;border-radius:999px;border:2px solid rgba(255,255,255,.55);white-space:nowrap;transition:background .15s,color .15s}
@@ -58,7 +58,7 @@ section.cat{padding-block:34px 12px;border-bottom:2px dashed rgba(255,255,255,.3
 .cat-head .titles{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
 .note{display:inline-block;margin:0;background:var(--white);color:var(--red);font-weight:800;font-size:14px;padding:4px 12px;border-radius:8px}
 .notes{display:flex;flex-wrap:wrap;gap:8px}
-.cat-img{width:clamp(110px,24vw,190px);height:auto;filter:drop-shadow(0 14px 18px var(--shade));flex:none}
+.cat-img{width:clamp(110px,24vw,190px);height:auto;flex:none}
 
 .items{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:4px 28px}
 .item{display:grid;grid-template-columns:1fr auto;gap:2px 14px;padding-block:12px;border-bottom:1px solid rgba(255,255,255,.22);align-items:baseline}
@@ -212,7 +212,7 @@ document.getElementById("menu").innerHTML=html;
 const navEl=document.getElementById("nav");navEl.innerHTML=nav;navEl.dir="rtl";
 // active chip
 const links=[...navEl.querySelectorAll("a")];
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle("on",a.dataset.id===e.target.id));const a=links.find(a=>a.dataset.id===e.target.id);a&&a.scrollIntoView({block:"nearest",inline:"center"});}})},{rootMargin:"-30% 0px -60% 0px"});
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle("on",a.dataset.id===e.target.id));const a=links.find(a=>a.dataset.id===e.target.id);if(a){const w=navEl;const x=a.offsetLeft-(w.clientWidth-a.offsetWidth)/2;w.scrollTo({left:x,behavior:"auto"});}}})},{rootMargin:"-30% 0px -60% 0px"});
 document.querySelectorAll("section.cat").forEach(s=>obs.observe(s));
 // search
 const norm=s=>s.toLowerCase().replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/\s+/g," ");
