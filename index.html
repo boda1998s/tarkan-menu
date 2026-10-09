@@ -212,7 +212,7 @@ document.getElementById("menu").innerHTML=html;
 const navEl=document.getElementById("nav");navEl.innerHTML=nav;navEl.dir="rtl";
 // active chip
 const links=[...navEl.querySelectorAll("a")];
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle("on",a.dataset.id===e.target.id));const a=links.find(a=>a.dataset.id===e.target.id);if(a){const w=navEl;const x=a.offsetLeft-(w.clientWidth-a.offsetWidth)/2;w.scrollTo({left:x,behavior:"auto"});}}})},{rootMargin:"-30% 0px -60% 0px"});
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){links.forEach(a=>a.classList.toggle("on",a.dataset.id===e.target.id));const a=links.find(a=>a.dataset.id===e.target.id);if(a){const r=a.getBoundingClientRect(),n=navEl.getBoundingClientRect();navEl.scrollBy({left:(r.left+r.width/2)-(n.left+n.width/2),behavior:"auto"});}}})},{rootMargin:"-30% 0px -60% 0px"});
 document.querySelectorAll("section.cat").forEach(s=>obs.observe(s));
 // search
 const norm=s=>s.toLowerCase().replace(/[أإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/\s+/g," ");
